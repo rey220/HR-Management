@@ -121,7 +121,7 @@ def create() :
             
             input_salary = int(input_salary_raw)
             
-            if not validator_input_salary(input_salary) :
+            if not validator_input_salary(input_salary_raw) :
                 continue
             
             break
