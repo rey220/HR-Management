@@ -112,25 +112,15 @@ def create() :
     
         input_salary_raw = input("Input gaji karyawan : ")
 
-        if not input_salary_raw :
-            
-            validator_input_salary(input_salary_raw)
-            continue
-        
-        try :
-            
-            input_salary = int(input_salary_raw)
-            
-            if not validator_input_salary(input_salary) :
-                continue
-            
-            break
-        
-        except ValueError :
+        if not validator_input_salary(input_salary_raw) :
             
             print("Error: Input harus berupa angka bulat saja (tanpa titik/koma/huruf)!")
             input("Tekan enter untuk menginput kembali...")
-                
+            continue
+        
+        input_salary = int(input_salary_raw.strip())
+        break
+               
     create_data_employees = {
         "id" : generate_employee_id(),
         "name" : input_name,

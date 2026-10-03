@@ -40,9 +40,18 @@ def validator_input_department(department) :
         print("Kolom input department tidak boleh kosong!")
         input("Tekan enter untuk menginput kembali...")
     
-def validator_input_salary(salary) :
-
-    if not salary.strip() :
+def validator_input_salary(salary_raw) :
+    
+    text = salary_raw.strip()
+    
+    if not text :
         
-        print("Kolom input gaji tidak boleh kosong!")
-        input("Tekan enter untuk menginput kembali...")
+        return False
+    
+    if not text.isdigit() :
+        
+        return False
+    
+    return True
+
+    
