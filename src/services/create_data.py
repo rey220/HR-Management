@@ -1,3 +1,4 @@
+from src.validators.input_validators import *
 from src.resources.database_app import data_storage
 from tabulate import tabulate
 import os
@@ -25,60 +26,156 @@ generate_employee_id = make_employee_id()
 
 def create() :
     
+    os.system("cls" if os.name == "nt" else "clear")
+    print("MEMBUAT DATA")
+    print()
+    
     while True :
     
-        os.system("cls" if os.name == "nt" else "clear")
-        print("MEMBUAT DATA")
-        print()
-        
         input_name = input("Input nama karyawan : ")
-        input_employement_type = input("Input status karyawan (KONTRAK/TETAP) : ")
-        input_contract_start = input("Input awal kontrak (tanggal/bulan/tahun) : ")
-        input_contract_end = input("Input akhir kontrak (tanggal/bulan/tahun) : ")
-        input_job_title = input("Input role karyawan : ")
-        input_department = input("Input departement : ")
-        input_salary = int(input("Input gaji karyawan : "))
 
-        create_data_employees = {
-            "id" : generate_employee_id(),
-            "name" : input_name,
-            "employement_type" : input_employement_type,
-            "contract_start" : input_contract_start,
-            "contract_end" : input_contract_end,
-            "job_title" : input_job_title,
-            "department" : input_department,
-            "salary" : input_salary
-        }
-        
-        list_for_show_data = []
-        
-        list_for_show_data.append(create_data_employees)
-        table_rows = []    
-        for item in list_for_show_data :
+        if not input_name.strip() :
             
-            table_rows.append([
-                item["id"],
-                item["name"].capitalize(),
-                item["employement_type"].upper(),
-                item["contract_start"],
-                item["contract_end"],
-                item["job_title"].capitalize(),
-                item["department"].upper(),
-                item["salary"]
-                ])
+            validators_input_name(input_name)
+            continue
         
-        print()   
-        title_rows = ["ID","Nama Karyawan","Status Karyawan","Awal Kontrak","Akhir Kontrak","Role Karyawan","Departement","Gaji"]
-        os.system("cls" if os.name == "nt" else "clear")
-        print(tabulate(table_rows,title_rows,"fancy_grid"))
+        else :
+            
+            break    
 
-        input_validator_user = input("Apakah data di atas sudah valid ? (Y/N) : ").upper()
+    while True :
         
-        if input_validator_user == "Y" :
+        input_employement_type = input("Input status karyawan (KONTRAK/TETAP) : ")
+        
+        if not input_employement_type.strip() : 
+            
+            validator_input_status(input_employement_type)
+            continue
+        
+        else :
+            
+            break
+        
+    while True :    
+    
+        input_contract_start = input("Input awal kontrak (tanggal/bulan/tahun) : ")
+        
+        if not input_contract_start.strip() :
+            
+            validator_input_contract_start(input_contract_start)
+            continue
+            
+        else :
+            
+            break
+    
+    while True :        
+            
+        input_contract_end = input("Input akhir kontrak (tanggal/bulan/tahun) : ")
+        
+        if not input_contract_end.strip() :
+            
+            validator_input_contract_end(input_contract_end)
+            continue
+            
+        else :
+            
+            break
+        
+    while True :
+    
+        input_job_title = input("Input role karyawan : ")
+        
+        if not input_job_title.strip() :
+            
+            validator_input_job(input_job_title)
+            continue
+            
+        else :
+            
+            break
+        
+    while True :
+        
+        input_department = input("Input departement : ")
+        
+        if not input_department.strip() :
+            
+            validator_input_department(input_department)
+            continue
+            
+        else :
+            
+            break
+        
+    while True :
+    
+        input_salary_raw = input("Input gaji karyawan : ")
+
+        if not input_salary_raw :
+            
+            validator_input_salary(input_salary_raw)
+            continue
+        
+        try :
+            
+            input_salary = int(input_salary_raw)
+            
+            if not validator_input_salary(input_salary) :
+                continue
+            
+            break
+        
+        except ValueError :
+            
+            print("Error: Input harus berupa angka bulat saja (tanpa titik/koma/huruf)!")
+            input("Tekan enter untuk menginput kembali...")
+                
+    create_data_employees = {
+        "id" : generate_employee_id(),
+        "name" : input_name,
+        "employement_type" : input_employement_type,
+        "contract_start" : input_contract_start,
+        "contract_end" : input_contract_end,
+        "job_title" : input_job_title,
+        "department" : input_department,
+        "salary" : input_salary
+    }
+    
+    list_for_show_data = []
+    
+    list_for_show_data.append(create_data_employees)
+    table_rows = []    
+    for item in list_for_show_data :
+        
+        table_rows.append([
+            item["id"],
+            item["name"].capitalize(),
+            item["employement_type"].upper(),
+            item["contract_start"],
+            item["contract_end"],
+            item["job_title"].capitalize(),
+            item["department"].upper(),
+            item["salary"]
+            ])
+    
+    print()   
+    title_rows = ["ID","Nama Karyawan","Status Karyawan","Awal Kontrak","Akhir Kontrak","Role Karyawan","Departement","Gaji"]
+    os.system("cls" if os.name == "nt" else "clear")
+    print(tabulate(table_rows,title_rows,"fancy_grid"))
+    
+    input_validator_user = input("Apakah data di atas sudah valid ? (Y/N) : ").upper()
+    show_message_success(input_validator_user,create_data_employees)
+
+def show_message_success(validator,data) :
+
+    while True :
+    
+        if validator == "Y" :
             
             os.system("cls" if os.name == "nt" else "clear")
             
-            data_storage.append(create_data_employees)
+            data_storage.append(data)
             data_nums = ["20%","40%","60%","80%","100%"]
             delay_nums =  [1.5,1.5,1.5,1.5,1.5]
             
@@ -96,7 +193,7 @@ def create() :
             input("Tekan enter kembali ke menu utama... ")
             return
         
-        elif input_validator_user == "N" :
+        elif validator == "N" :
             
             print("Silahkan input kembali data dengan benar ")
             continue
@@ -106,10 +203,10 @@ def create() :
             print("Format input tidak valid. Gunakan format teks untuk menginput")
             input("Tekan enter untuk melanjutkan...")
             continue
-            
-        
-    
 
+
+    
+                        
         
 
         
