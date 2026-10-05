@@ -47,16 +47,14 @@ def create() :
 
         while True :
             
-            input_employement_type = input("Input status karyawan (KONTRAK/TETAP) : ")
+            input_employement_type = input("Input status karyawan (KONTRAK/TETAP/MAGANG) : ")
             
-            if not input_employement_type.strip() : 
-                
-                validator_input_status(input_employement_type)
-                continue
-            
-            else :
+            if validator_input_status(input_employement_type) :
                 
                 break
+            
+            print("Jenis kepigawaian tidak valid.")
+            input("Tekan enter untuk menginput kembali...")
             
         while True :    
         

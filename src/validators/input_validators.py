@@ -7,10 +7,7 @@ def validators_input_name(name) :
 
 def validator_input_status(status)     :
         
-    if status not in ["kontrak","tetap"] :
-        
-        print("Jenis kepigawaian tidak valid.")
-        input("Tekan enter untuk menginput kembali...")
+    return status.strip().upper() in ["KONTRAK","TETAP","MAGANG"]
             
 def validator_input_contract_start(contract_start) :
     
