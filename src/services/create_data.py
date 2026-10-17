@@ -1,4 +1,5 @@
 from src.validators.input_validators import *
+from src.validators.input_checker import input_valid
 from src.resources.database_app import data_storage
 from tabulate import tabulate
 import os
@@ -31,96 +32,16 @@ def create() :
         os.system("cls" if os.name == "nt" else "clear")
         print("MEMBUAT DATA")
         print()
+               
+        input_name = input_valid("Input nama karyawan : ",validator_input_name,"Kolom input nama tidak boleh kosong!")
+        input_employement_type = input_valid("Input status karyawan (KONTRAK/TETAP/MAGANG) : ",validator_input_status,"Jenis kepigawaian tidak valid!")
+        input_contract_start = input_valid("Input awal kontrak (tanggal/bulan/tahun) : ",validator_input_contract_start,"Kolom input awal kontrak tidak boleh kosong!")
+        input_contract_end = input_valid("Input akhir kontrak (tanggal/bulan/tahun) : ",validator_input_contract_end,"Kolom input akhir kontrak tidak boleh kosong!")
+        input_job_title = input_valid("Input role karyawan : ",validator_input_job,"Kolom input role tidak boleh kosong!")
+        input_department = input_valid("Input departement : ",validator_input_department,"Kolom input departement tidak boleh kosong!")
+        input_salary_raw = input_valid("Input gaji karyawan : ",validator_input_salary,"Error: Gaji harus berupa angka bulat!")
+        input_salary = int(input_salary_raw)                
         
-        while True :
-        
-            input_name = input("Input nama karyawan : ")
-
-            if not input_name.strip() :
-                
-                validators_input_name(input_name)
-                continue
-            
-            else :
-                
-                break    
-
-        while True :
-            
-            input_employement_type = input("Input status karyawan (KONTRAK/TETAP/MAGANG) : ")
-            
-            if validator_input_status(input_employement_type) :
-                
-                break
-            
-            print("Jenis kepigawaian tidak valid.")
-            input("Tekan enter untuk menginput kembali...")
-            
-        while True :    
-        
-            input_contract_start = input("Input awal kontrak (tanggal/bulan/tahun) : ")
-            
-            if not input_contract_start.strip() :
-                
-                validator_input_contract_start(input_contract_start)
-                continue
-                
-            else :
-                
-                break
-        
-        while True :        
-                
-            input_contract_end = input("Input akhir kontrak (tanggal/bulan/tahun) : ")
-            
-            if not input_contract_end.strip() :
-                
-                validator_input_contract_end(input_contract_end)
-                continue
-                
-            else :
-                
-                break
-            
-        while True :
-        
-            input_job_title = input("Input role karyawan : ")
-            
-            if not input_job_title.strip() :
-                
-                validator_input_job(input_job_title)
-                continue
-                
-            else :
-                
-                break
-            
-        while True :
-            
-            input_department = input("Input departement : ")
-            
-            if not input_department.strip() :
-                
-                validator_input_department(input_department)
-                continue
-                
-            else :
-                
-                break
-            
-        while True :
-        
-            input_salary_raw = input("Input gaji karyawan : ")
-
-            if not validator_input_salary(input_salary_raw) :
-                
-                print("Error: Input harus berupa angka bulat saja (tanpa titik/koma/huruf)!")
-                input("Tekan enter untuk menginput kembali...")
-                continue
-            
-            input_salary = int(input_salary_raw.strip())
-            break
-                
         create_data_employees = {
             "id" : generate_employee_id(),
             "name" : input_name,
