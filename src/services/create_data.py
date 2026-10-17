@@ -35,8 +35,17 @@ def create() :
                
         input_name = input_valid("Input nama karyawan : ",validator_input_name,"Kolom input nama tidak boleh kosong!")
         input_employement_type = input_valid("Input status karyawan (KONTRAK/TETAP/MAGANG) : ",validator_input_status,"Jenis kepigawaian tidak valid!")
-        input_contract_start = input_valid("Input awal kontrak (tanggal/bulan/tahun) : ",validator_input_contract_start,"Kolom input awal kontrak tidak boleh kosong!")
-        input_contract_end = input_valid("Input akhir kontrak (tanggal/bulan/tahun) : ",validator_input_contract_end,"Kolom input akhir kontrak tidak boleh kosong!")
+        
+        if input_employement_type.upper() == "TETAP" :
+            
+            input_contract_start = "-"
+            input_contract_end= "-"
+            
+        else :
+            
+            input_contract_start = input_valid("Input awal kontrak (tanggal/bulan/tahun) : ",validator_input_contract_start,"Kolom input awal kontrak tidak boleh kosong!")
+            input_contract_end = input_valid("Input akhir kontrak (tanggal/bulan/tahun) : ",validator_input_contract_end,"Kolom input akhir kontrak tidak boleh kosong!")
+            
         input_job_title = input_valid("Input role karyawan : ",validator_input_job,"Kolom input role tidak boleh kosong!")
         input_department = input_valid("Input departement : ",validator_input_department,"Kolom input departement tidak boleh kosong!")
         input_salary_raw = input_valid("Input gaji karyawan : ",validator_input_salary,"Error: Gaji harus berupa angka bulat!")
