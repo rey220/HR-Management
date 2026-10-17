@@ -1,4 +1,4 @@
-def validators_input_name(name) : 
+def validator_input_name(name) : 
     
     return bool(name.strip())
     
