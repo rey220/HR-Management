@@ -38,12 +38,16 @@ def show(db) :
                     
                     if item["name"].strip().casefold() == input_nama_karyawan.casefold() :
                         
-                        os.system("cls" if os.name =="nt" else "clear")  
                         show_data_table(data,item)   
         
                 if len(data) == 0 :
                     
                     print(f"Nama karyawan : {input_nama_karyawan} tidak ada.")
+                    
+                else :
+                    
+                    os.system("cls" if os.name =="nt" else "clear")
+                    print(tabulate(data,TITLE_ROWS,"fancy_grid"))
                         
                 input("Tekan enter untuk melanjutkan...")
                 
@@ -61,8 +65,10 @@ def show(db) :
                     
                     for item in db :
                         
-                        show_data_table(all_data,item) 
-                        os.system("cls" if os.name =="nt" else "clear")  
+                        show_data_table(all_data,item)
+                    
+                    os.system("cls" if os.name =="nt" else "clear")
+                    print(tabulate(all_data,TITLE_ROWS,"fancy_grid"))
                         
                 input("Tekan enter untuk melanjutkan...")  
                         
@@ -77,6 +83,8 @@ def show(db) :
             input("Tekan enter untuk melanjutkan...")
 
          
+TITLE_ROWS =  ["ID","Nama Karyawan","Status Karyawan","Awal Kontrak","Akhir Kontrak","Role Karyawan","Departement","Gaji"]
+
 def show_data_table(records,items) :
     
     records.append([
@@ -92,8 +100,7 @@ def show_data_table(records,items) :
         
     ])
     
-    TITLE_ROWS =  ["ID","Nama Karyawan","Status Karyawan","Awal Kontrak","Akhir Kontrak","Role Karyawan","Departement","Gaji"]
-    print(tabulate(records,TITLE_ROWS,"fancy_grid"))              
+
     
 
         
