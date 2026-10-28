@@ -1,7 +1,6 @@
 from src.validators.input_validators import *
 from src.validators.input_checker import input_valid
 from src.services.show_data import show_data_table
-from src.resources.database_app import data_storage
 from tabulate import tabulate
 import os
 
@@ -16,92 +15,84 @@ def update(db) :
         
         print("Data tidak tersedia, Silahkan input data terlebih dahulu")
         input("Tekan enter untuk melanjutkan....")
-    
-    os.system("cls" if os.name=="nt" else "clear")
-    print("-"*15,"UPDATE DATA","-"*15)
-    print()
+        return
     
     while True :
-    
-        try :
+        
+        os.system("cls" if os.name=="nt" else "clear")
+        print("-"*15,"UPDATE DATA","-"*15)
+        print()
 
-            input_ID = input_valid("Input ID Karyawan : ",validator_input_name,"Kolom input ID tidak boleh kosong!")
+        input_ID = input_valid("Input ID Karyawan : ",validator_input_name,"Kolom input ID tidak boleh kosong!")
+        
+        for item in db :
             
-            data_table = []       
-            
-            for item in db :
-                
-                if item["id"] == input_ID.upper().strip() :
-                
+            if input_ID.upper() in item["id"] :
+
+                while True :
+
+                    os.system("cls" if os.name=="nt" else "clear")
+                    data_table =[]
                     show_data_table(data_table,item)
+                    print()
+                    print(f" INFORMASI DATA ID : {input_ID.upper()} ")                
                     print()
                     print(tabulate(data_table,TITLE_ROWS,"fancy_grid"))
                     print()
                     
-                    while True :
+                    menu_update = [[1,"Nama Karyawan"],
+                                   [2,"Status Karyawan"],
+                                   [3,"Awal Kontrak"],
+                                   [4,"Akhir Kontrak"],
+                                   [5,"Role Karyawan"],
+                                   [6,"Departement"],
+                                   [7,"Gaji"],
+                                   [8,"Menu Utama"]
+                                   ]
+                    menu_header = ["No","Pilihan Update"]
+                    print(tabulate(menu_update,menu_header,"fancy_grid"))
+                    print()
                     
-                        # os.system("cls" if os.name=="nt" else "clear")
-                        print("Update : ")
-                        print()
-                        print("1. Nama Karyawan")
-                        print("2. Status Karyawan")
-                        print("3. Awal Kontrak")
-                        print("4. Akhir Kontrak")
-                        print("5. Role Karyawan")
-                        print("6. Departement")
-                        print("7. Gaji")
-                        print("8. Menu utama")
-                        print()
+                    try :
                         
-                        try :
+                        choose_option_num = int(input("Input No : ").strip())
+                        
+                        if choose_option_num == 1 :
                             
-                            input_num = int(input("Input No : ").strip())
+                            update_input_name = input_valid("Input Nama Lengkap Karyawan : ",validator_input_name,"Kolom input tidak boleh kosong!")
                             
-                            if input_num == 1 :
-                                
-                                input_nama_update = input_valid("Input Nama Karyawan : ",validator_input_name,"Kolom input nama tidak boleh kosong!")
-                                
-                                flag_data = False
-                                item["name"] = input_nama_update
-                                flag_data = True
-    
-                                if flag_data :
-                                    
-                                    print()
-                                    print("Nama berhasil diperbaharui!")
-                                    print()
-                                    
-                                else :
-                                    
-                                    print("Nama gagal diperbaharui.")
+                            data_flag = False
+                            item["name"] = update_input_name
+                            data_flag = True
                             
-                            elif input_num == 8 :
+                            if data_flag :
                                 
-                                return    
+                                print()    
+                                print("Nama berhasil diperbaharui")
+                                input("Tekan enter untuk melanjutkan...")
+                                continue
                                 
-                        except ValueError :
+                            else :
+                                
+                                print()    
+                                print("Nama gagal diperbaharui")
+                                input("Tekan enter untuk melanjutkan...")
+                                continue
                             
-                            print("Momok")
-                    
+                        elif choose_option_num == 8 :
+                            
+                            return
+                        
+                    except ValueError :
+                        
+                        print("Input tidak valid. Gunakan angka/bilangan bulat untuk menginput")
+                        input("Tekan enter untuk melanjutkan")
+
+            else :
                 
-            if len(data_table) == 0 :
-                
-                print(f"Data dengan ID : {input_ID} tidak ditemukan")
-                input("Tekan enter untuk menginput kembali...")
-                continue
-                
-            # else :
-                
-            #     os.system("cls" if os.name=="nt" else "clear")
-            #     print()
-            #     print(f"DATA KARYAWAN ID : {input_ID.upper()}")
-            #     print()
-            #     print(tabulate(data_table,TITLE_ROWS,"fancy_grid"))
-            #     print()
-                
-        except ValueError :
-            
-            print("Momok")
+                print(f"{input_ID.upper()} tidak ditemukan!")
+                input("Tekan enter untuk kembali ke menu utama...")
+
         
 
             
