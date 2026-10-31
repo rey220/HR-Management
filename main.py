@@ -1,5 +1,6 @@
 from src.services.create_data import create
 from src.services.show_data import show
+from src.services.update_data import update
 from src.resources.database_app import data_storage
 import os
 
@@ -36,6 +37,10 @@ def main(data) :
             elif input_user_choice == 2 :
 
                 show(data)
+                
+            elif input_user_choice == 3 :
+                
+                update(data)
    
             elif input_user_choice == 5 :
                 
