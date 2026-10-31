@@ -51,14 +51,14 @@ def print_new_contract_end(data) :
     if data :
         
         print()    
-        print("Awal Kontrak berhasil diperbaharui")
+        print("Akhir Kontrak berhasil diperbaharui")
         input("Tekan enter untuk melanjutkan...")
         return
             
     else :
         
         print()    
-        print("Awal Kontrak gagal diperbaharui")
+        print("Akhir Kontrak gagal diperbaharui")
         input("Tekan enter untuk melanjutkan...")
         return
     

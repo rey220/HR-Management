@@ -4,7 +4,7 @@ from src.validators.validator_update_feature import *
 
 def print_ID_unavailable(input_id,data) :
     
-    if input_id not in data["id"] :
+    if input_id != data["id"] :
         
         print()
         print()

@@ -80,8 +80,8 @@ def update(db) :
                         print("Input tidak valid. Gunakan angka/bilangan bulat untuk menginput")
                         input("Tekan enter untuk melanjutkan")
 
-            print_ID_unavailable(input_ID,item)
-            return
+        print_ID_unavailable(input_ID,item)
+        return
   
 
             
