@@ -28,7 +28,7 @@ def update(db) :
         
         for item in db :
             
-            if input_ID.upper() in item["id"] :
+            if input_ID.upper() == item["id"] :
 
                 while True :
 
@@ -80,12 +80,9 @@ def update(db) :
                         print("Input tidak valid. Gunakan angka/bilangan bulat untuk menginput")
                         input("Tekan enter untuk melanjutkan")
 
-            else :
-                
-                print(f"{input_ID.upper()} tidak ditemukan!")
-                input("Tekan enter untuk kembali ke menu utama...")
-
-        
+            print_ID_unavailable(input_ID,item)
+            return
+  
 
             
         
