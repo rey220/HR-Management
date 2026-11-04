@@ -1,3 +1,7 @@
+def validator_input_Y_N(input) :
+    
+    return input.strip().upper() in ["Y","N"]
+
 def validator_input_name(name) : 
     
     return bool(name.strip())
