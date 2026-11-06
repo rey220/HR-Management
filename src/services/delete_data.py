@@ -78,7 +78,7 @@ def delete(db) :
                 
                 os.system("cls" if os.name=="nt" else "clear")
                 data_nums =["20%","40%","60%","80%","100%"]
-                delays = [1.3,1.3,1.3,1.3,1.3]
+                delays = [0.3,0.3,0.3,0.3,0.3]
                 
                 for i,value in enumerate(data_nums) :
                     
