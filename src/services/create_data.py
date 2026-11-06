@@ -83,6 +83,7 @@ def create() :
         title_rows = ["ID","Nama Karyawan","Status Karyawan","Awal Kontrak","Akhir Kontrak","Role Karyawan","Departement","Gaji"]
         os.system("cls" if os.name == "nt" else "clear")
         print(tabulate(table_rows,title_rows,"fancy_grid"))
+        print()
         
         input_validator_user = input("Apakah data di atas sudah valid ? (Y/N) : ").upper()
             
