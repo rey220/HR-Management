@@ -82,27 +82,29 @@ def create() :
         print(tabulate(table_rows,title_rows,"fancy_grid"))
         print()
         
-        input_validator_user = input("Apakah data di atas sudah valid ? (Y/N) : ").upper()
+        input_validator_user = input_valid("Apakah Anda Akan Menghapus Data ID Ini ? (Y/N) : ",
+                                           validator_input_Y_N,
+                                           "Input Tidak Valid. Gunakan Y/N Untuk Melanjutkan\n")
             
-        if input_validator_user == "Y" :
+        if input_validator_user.upper() == "Y" :
             
             show_message_success(input_validator_user,create_data_employeed)
             break
         
-        elif input_validator_user == "N" :
+        elif input_validator_user.upper() == "N" :
             
             print("Silahkan input data kembali dengan benar")
             input("Tekan enter untuk melanjutkan...")
             
 def show_message_success(validator,data) :
     
-    if validator == "Y" :
+    if validator.upper() == "Y" :
         
         os.system("cls" if os.name == "nt" else "clear")
         
         data_storage.append(data)
         data_nums = ["20%","40%","60%","80%","100%"]
-        delay_nums =  [1.5,1.5,1.5,1.5,1.5]
+        delay_nums =  [0.8,0.8,0.8,0.8,0.8]
         
         for index,value in enumerate(data_nums) :
             
