@@ -82,7 +82,7 @@ def create() :
         print(tabulate(table_rows,title_rows,"fancy_grid"))
         print()
         
-        input_validator_user = input_valid("Apakah Anda Akan Menghapus Data ID Ini ? (Y/N) : ",
+        input_validator_user = input_valid("Apakah data di atas sudah valid ? (Y/N) : ",
                                            validator_input_Y_N,
                                            "Input Tidak Valid. Gunakan Y/N Untuk Melanjutkan\n")
             
