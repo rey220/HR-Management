@@ -46,14 +46,28 @@ def create() :
         print()
         
         data_awal = input_all_data(("name","Input nama karyawan : ",validator_input_name,"Kolom input nama tidak boleh kosong!"),
-                                   ("employement_type","Input status karyawan (KONTRAK/TETAP/MAGANG) : ",validator_input_status,"Jenis kepigawaian tidak valid!"),
-                                   ("contract_start","Input awal kontrak (tanggal/bulan/tahun) : ",validator_input_contract_start,"Kolom input awal kontrak tidak boleh kosong!"),
-                                   ("contract_end","Input akhir kontrak (tanggal/bulan/tahun) : ",validator_input_contract_end,"Kolom input akhir kontrak tidak boleh kosong!"),
-                                   ("job_title","Input role karyawan : ",validator_input_job,"Kolom input role tidak boleh kosong!"),
-                                   ("department","Input departement : ",validator_input_department,"Kolom input departement tidak boleh kosong!"),
-                                   ("salary","Input gaji karyawan : ",validator_input_salary,"Error: Gaji harus berupa angka bulat!"))
+                                   ("employement_type","Input status karyawan (KONTRAK/TETAP/MAGANG) : ",validator_input_status,"Jenis kepigawaian tidak valid!"))
         
-        create_data_employeed = {"id": generate_employee_id(), **data_awal}        
+        if data_awal["employement_type"].upper() == "TETAP" :
+            
+            data_kontrak = {"contract_start" : "-",
+                            "contract_end" : "-"}
+            
+        else :
+            
+            data_kontrak = input_all_data(("contract_start","Input awal kontrak (tanggal/bulan/tahun) : ",validator_input_contract_start,"Kolom input awal kontrak tidak boleh kosong!"),
+                                          ("contract_end","Input akhir kontrak (tanggal/bulan/tahun) : ",validator_input_contract_end,"Kolom input akhir kontrak tidak boleh kosong!"))
+                                   
+        data_lanjutan = input_all_data(("job_title","Input role karyawan : ",validator_input_job,"Kolom input role tidak boleh kosong!"),
+                                       ("department","Input departement : ",validator_input_department,"Kolom input departement tidak boleh kosong!"),
+                                       ("salary","Input gaji karyawan : ",validator_input_salary,"Error: Gaji harus berupa angka bulat!"))                                   
+                                   
+        data_lanjutan["salary"] = int(data_lanjutan["salary"])
+        
+        create_data_employeed = {"id": generate_employee_id(),
+                                **data_awal,
+                                **data_kontrak,
+                                **data_lanjutan}        
         list_for_show_data = []
         
         list_for_show_data.append(create_data_employeed)
