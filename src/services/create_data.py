@@ -1,6 +1,7 @@
 from src.validators.input_validators import *
 from src.validators.input_checker import input_valid
 from src.resources.database_app import data_storage
+from src.services.show_data import show_data_table
 from tabulate import tabulate
 import os
 import time
@@ -25,6 +26,17 @@ def make_employee_id(prefix="ID-K",start_num=1) :
 
 generate_employee_id = make_employee_id()
 
+
+def input_all_data(*spesification) :
+    
+    hasil = {}
+    
+    for key,prompt,validator,err_msg in spesification :
+        
+        hasil[key] = input_valid(prompt,validator,err_msg)
+        
+    return hasil
+
 def create() :
     
     while True :
@@ -32,52 +44,37 @@ def create() :
         os.system("cls" if os.name == "nt" else "clear")
         print("MEMBUAT DATA")
         print()
-               
-        input_name = input_valid("Input nama karyawan : ",validator_input_name,"Kolom input nama tidak boleh kosong!")
-        input_employement_type = input_valid("Input status karyawan (KONTRAK/TETAP/MAGANG) : ",validator_input_status,"Jenis kepigawaian tidak valid!")
         
-        if input_employement_type.upper() == "TETAP" :
+        data_awal = input_all_data(("name","Input nama karyawan : ",validator_input_name,"Kolom input nama tidak boleh kosong!"),
+                                   ("employement_type","Input status karyawan (KONTRAK/TETAP/MAGANG) : ",validator_input_status,"Jenis kepigawaian tidak valid!"))
+        
+        if data_awal["employement_type"].upper() == "TETAP" :
             
-            input_contract_start = "-"
-            input_contract_end= "-"
+            data_kontrak = {"contract_start" : "-",
+                            "contract_end" : "-"}
             
         else :
             
-            input_contract_start = input_valid("Input awal kontrak (tanggal/bulan/tahun) : ",validator_input_contract_start,"Kolom input awal kontrak tidak boleh kosong!")
-            input_contract_end = input_valid("Input akhir kontrak (tanggal/bulan/tahun) : ",validator_input_contract_end,"Kolom input akhir kontrak tidak boleh kosong!")
-            
-        input_job_title = input_valid("Input role karyawan : ",validator_input_job,"Kolom input role tidak boleh kosong!")
-        input_department = input_valid("Input departement : ",validator_input_department,"Kolom input departement tidak boleh kosong!")
-        input_salary_raw = input_valid("Input gaji karyawan : ",validator_input_salary,"Error: Gaji harus berupa angka bulat!")
-        input_salary = int(input_salary_raw)                
+            data_kontrak = input_all_data(("contract_start","Input awal kontrak (tanggal/bulan/tahun) : ",validator_input_contract_start,"Kolom input awal kontrak tidak boleh kosong!"),
+                                          ("contract_end","Input akhir kontrak (tanggal/bulan/tahun) : ",validator_input_contract_end,"Kolom input akhir kontrak tidak boleh kosong!"))
+                                   
+        data_lanjutan = input_all_data(("job_title","Input role karyawan : ",validator_input_job,"Kolom input role tidak boleh kosong!"),
+                                       ("department","Input departement : ",validator_input_department,"Kolom input departement tidak boleh kosong!"),
+                                       ("salary","Input gaji karyawan : ",validator_input_salary,"Error: Gaji harus berupa angka bulat!"))                                   
+                                   
+        data_lanjutan["salary"] = int(data_lanjutan["salary"])
         
-        create_data_employees = {
-            "id" : generate_employee_id(),
-            "name" : input_name,
-            "employement_type" : input_employement_type,
-            "contract_start" : input_contract_start,
-            "contract_end" : input_contract_end,
-            "job_title" : input_job_title,
-            "department" : input_department,
-            "salary" : input_salary
-        }
-        
+        create_data_employeed = {"id": generate_employee_id(),
+                                **data_awal,
+                                **data_kontrak,
+                                **data_lanjutan}        
         list_for_show_data = []
         
-        list_for_show_data.append(create_data_employees)
+        list_for_show_data.append(create_data_employeed)
         table_rows = []    
         for item in list_for_show_data :
             
-            table_rows.append([
-                item["id"],
-                item["name"].capitalize(),
-                item["employement_type"].upper(),
-                item["contract_start"],
-                item["contract_end"],
-                item["job_title"].capitalize(),
-                item["department"].upper(),
-                item["salary"]
-                ])
+            show_data_table(table_rows,item)    
         
         print()   
         title_rows = ["ID","Nama Karyawan","Status Karyawan","Awal Kontrak","Akhir Kontrak","Role Karyawan","Departement","Gaji"]
@@ -89,7 +86,7 @@ def create() :
             
         if input_validator_user == "Y" :
             
-            show_message_success(input_validator_user,create_data_employees)
+            show_message_success(input_validator_user,create_data_employeed)
             break
         
         elif input_validator_user == "N" :
