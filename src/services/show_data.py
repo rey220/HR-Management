@@ -33,23 +33,18 @@ def show(db) :
   
                 input_nama_karyawan = input("Input nama lengkap karyawan : ").strip()
                 
-                data = [
-                    [
-                    items["id"],
-                    items["name"].capitalize(),
-                    items["employement_type"].upper(),
-                    items["contract_start"],
-                    items["contract_end"],
-                    items["job_title"].capitalize(),
-                    items["department"].upper(),
-                    items["salary"]
-                    ] for items in db if items["name"].strip().casefold() == input_nama_karyawan.casefold()] 
-        
+                get_data_by_name = [items for items in db if items["name"].strip().casefold() == input_nama_karyawan.casefold()] 
+                data = []
+                
+                for item in get_data_by_name :
+                
+                    show_data_table(data,item)
+
                 if len(data) == 0 :
                     
                     print(f"Nama karyawan : {input_nama_karyawan} tidak ada.")
                     
-                if data :
+                else :
                     
                     os.system("cls" if os.name =="nt" else "clear")
                     print(tabulate(tabular_data=data,headers=TITLE_ROWS,tablefmt="fancy_grid"))
@@ -73,7 +68,7 @@ def show(db) :
                         show_data_table(all_data,item)
                     
                     os.system("cls" if os.name =="nt" else "clear")
-                    print(tabulate(tabular_data=data,headers=TITLE_ROWS,tablefmt="fancy_grid"))
+                    print(tabulate(tabular_data=all_data,headers=TITLE_ROWS,tablefmt="fancy_grid"))
                         
                 input("Tekan enter untuk melanjutkan...")  
                         
